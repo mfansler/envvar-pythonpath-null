@@ -1,0 +1,28 @@
+package:
+  name: envvar-pythonnousersite-true
+  version: 0.1.0
+
+build:
+  number: 1
+
+test:
+  commands:
+    - test $PYTHONNOUSERSITE  # [unix]
+    - test $PYTHONNOUSERSITE = 1  # [unix]
+    - if not defined PYTHONNOUSERSITE exit 1  # [win]
+    - if not "%PYTHONNOUSERSITE%"=="1" exit 1  # [win]
+
+about:
+  home: https://github.com/mfansler/envvar-pythonnousersite-true
+  license: CC0-1.0
+  summary: "Set 'PYTHONNOUSERSITE=1' on environment activation."
+  description: |
+    This package defines the environment variable 'PYTHONNOUSERSITE=1'
+    when the Conda environment is activated. This prevents the Python
+    `site` module from adding a user site to the `sys.path`,
+    effectively insulating the Conda environment from user-level
+    packages.
+
+extra:
+  maintainers:
+    - mfansler

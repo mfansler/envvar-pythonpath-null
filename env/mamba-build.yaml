@@ -1,0 +1,7 @@
+name: mamba-build
+channels:
+  - conda-forge
+dependencies:
+  - boa=0.8
+  - anaconda-client
+  

@@ -1,0 +1,45 @@
+name: Conda Build and Publish
+
+on:
+  push:
+    paths:
+      - 'recipe/meta.yaml'
+
+jobs:
+  build-publish:
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+
+    env:
+      TZ: UTC
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      ANACONDA_USER: merv
+      ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+
+      - name: install mamba
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          miniforge-variant: Mambaforge
+          use-mamba: true
+          auto-activate-base: false
+          activate-environment: mamba-build
+          environment-file: env/mamba-build.yaml
+
+      - name: build and upload package
+        shell: bash -l -eo pipefail {0}
+        run: |
+          cd recipe
+          conda mambabuild \
+            --user $ANACONDA_USER \
+            --token $ANACONDA_TOKEN \
+            .

@@ -13,9 +13,9 @@ test:
 about:
   home: https://github.com/mfansler/envvar-pythonpath-null
   license: CC0-1.0
-  summary: "Set 'PYTHONPATH=""' on environment activation."
+  summary: "Unset 'PYTHONPATH' on environment activation."
   description: |
-    This package defines the environment variable 'PYTHONPATH=""'
+    This package unsets the environment variable 'PYTHONPATH'
     when the Conda environment is activated. This prevents the Python
     from loading modules from any directories this variable provides,
     effectively insulating the Conda environment from user-level
